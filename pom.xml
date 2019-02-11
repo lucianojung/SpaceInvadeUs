@@ -8,5 +8,11 @@
     <artifactId>SpaceInvadeUs</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <!--todo add fxgl-->
+    <dependencies>
+        <dependency>
+            <groupId>com.github.almasb</groupId>
+            <artifactId>fxgl</artifactId>
+            <version>0.5.4</version>
+        </dependency>
+    </dependencies>
 </project>
