@@ -1,38 +1,42 @@
 package de.lucianojung.Entities;
 
+import com.almasb.fxgl.app.FXGL;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.AnimationChannel;
-import de.lucianojung.spaceInvadeUs.SpaceInvadeUsApp;
+import de.lucianojung.spaceInvadeUs.Config;
 import javafx.util.Duration;
 
 public class InvaderControl extends Component {
     private double speed;
-    private double bulletSpeed;
 
     private AnimationChannel animFly;
     private AnimatedTexture texture;
 
     public InvaderControl(EntityType entityType) {
-        this.speed = 5.0;
-        this.bulletSpeed = 1.0;
+        this.speed = ((Config) FXGL.getGameConfig()).getInvaderSpeed();
 
-        animFly = new AnimationChannel("InvaderA.png", 2, 64, 64, Duration.seconds(3), 0, 1);
+        if (EntityType.INVADERA.equals(entityType))
+            animFly = new AnimationChannel("InvaderA.png", 2, 64, 64, Duration.seconds(1), 0, 1);
+        if (EntityType.INVADERB.equals(entityType))
+            animFly = new AnimationChannel("InvaderB.png", 2, 64, 64, Duration.seconds(1), 0, 1);
+        if (EntityType.INVADERC.equals(entityType))
+            animFly = new AnimationChannel("InvaderC.png", 2, 64, 64, Duration.seconds(1), 0, 1);
 
         texture = new AnimatedTexture(animFly);
     }
 
     @Override
-    public void onAdded(){
+    public void onAdded() {
         entity.setView(texture);
         texture.loopAnimationChannel(animFly);
     }
 
     @Override
-    public void onUpdate(double tpf){
-        entity.translateX(speed * tpf);
+    public void onUpdate(double tpf) {
+        entity.translateX(speed);
 
-        if (speed != 0){
+        if (speed != 0) {
 
         }
 
@@ -54,12 +58,12 @@ public class InvaderControl extends Component {
         }*/
     }
 
-    public void moveRight(){
+    public void moveRight() {
         this.speed = Math.abs(speed);
         getEntity().setScaleX(1);
     }
 
-    public void moveLeft(){
+    public void moveLeft() {
         this.speed = -1 * Math.abs(speed);
         getEntity().setScaleX(-1);
     }

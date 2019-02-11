@@ -1,34 +1,46 @@
 package de.lucianojung.spaceInvadeUs;
 
 public class Config {
+    private int gameWidth;
+    private int gameHeight;
+
     private double playerSpeed;
-    private double playerBulletSpeed;
     private int playerLives;
 
-    private double enemySpeed;
-    private double enemyBulletSpeed;
+    private int invadersAmount;
+    private double invaderSpeed;
+
+    private double bulletSpeed;
 
     //+++++++++++++++++++++++++++++++
     //getter                        +
     //+++++++++++++++++++++++++++++++
 
-    public double getPlayerSpeed() {
-        return playerSpeed;
+    public int getGameWidth() {
+        return gameWidth;
     }
 
-    public double getPlayerBulletSpeed() {
-        return playerBulletSpeed;
+    public int getGameHeight() {
+        return gameHeight;
+    }
+
+    public double getPlayerSpeed() {
+        return playerSpeed;
     }
 
     public int getPlayerLives() {
         return playerLives;
     }
 
-    public double getEnemySpeed() {
-        return enemySpeed;
+    public int getInvadersAmount() {
+        return invadersAmount;
     }
 
-    public double getEnemyBulletSpeed() {
-        return enemyBulletSpeed;
+    public double getInvaderSpeed() {
+        return invaderSpeed;
+    }
+
+    public double getBulletSpeed() {
+        return bulletSpeed;
     }
 }

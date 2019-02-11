@@ -1,12 +1,17 @@
 package de.lucianojung.spaceInvadeUs;
 
+import com.almasb.fxgl.app.FXGL;
 import com.almasb.fxgl.app.GameApplication;
-import com.almasb.fxgl.entity.Entities;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.input.Input;
+import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.settings.GameSettings;
+import de.lucianojung.Entities.BulletControl;
 import de.lucianojung.Entities.InvaderControl;
 import de.lucianojung.Entities.EntityType;
+import de.lucianojung.Entities.ShipControl;
 import javafx.geometry.Dimension2D;
+import javafx.scene.input.KeyCode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +25,8 @@ public class SpaceInvadeUsApp extends GameApplication {
     private SpaceInvadeUsFactory factory;
 
 
-    //private Ship ship;
-    private List<Entity> invaders;
+    private Entity ship;
+    private List<List<Entity>> invaders;
 
     @Override
     protected void initSettings(GameSettings settings) {
@@ -33,7 +38,7 @@ public class SpaceInvadeUsApp extends GameApplication {
         settings.setVersion(GAMEVERSION);
         settings.setCloseConfirmation(false);
 
-
+        invaders = new ArrayList<List<Entity>>();
     }
 
     @Override
@@ -41,15 +46,69 @@ public class SpaceInvadeUsApp extends GameApplication {
         getGameWorld().addEntityFactory(new SpaceInvadeUsFactory());
         getGameWorld().setLevelFromMap("SpaceInvadeUs.json");
 
-        invaders = new ArrayList<Entity>();
-        invaders.add(getGameWorld().spawn("Invader"));
-        invaders.get(0).getComponent(InvaderControl.class).moveRight();
+        int invadersAmount = ((Config) FXGL.getGameConfig()).getInvadersAmount();
+        for (int i = 0; i < 5; i++) {
+            invaders.add(new ArrayList<Entity>());
+            for (int j = 0; j < invadersAmount / 5; j++) {
+                Entity currentInvader = null;
+                if (i == 0)
+                    currentInvader = spawnInvader(EntityType.INVADERC);
+                if (i == 1)
+                    currentInvader = spawnInvader(EntityType.INVADERB);
+                if (i == 2)
+                    currentInvader = spawnInvader(EntityType.INVADERB);
+                if (i == 3)
+                    currentInvader = spawnInvader(EntityType.INVADERA);
+                if (i == 4)
+                    currentInvader = spawnInvader(EntityType.INVADERA);
 
-        Entity entity = Entities.builder()
-                .at(200, 200)
-                .with(new InvaderControl(EntityType.INVADERA))
-                .buildAndAttach();
-        entity.getComponent(InvaderControl.class).moveLeft();
+                invaders.get(i).add(currentInvader);
+                currentInvader.setPosition(64 * j, 64 * i);
+                currentInvader.getComponent(InvaderControl.class).moveRight();
+            }
+        }
+
+        ship = getGameWorld().spawn("Ship");
+    }
+
+    private Entity spawnInvader(EntityType entityType) {
+        if (entityType == EntityType.INVADERA)
+            return getGameWorld().spawn("InvaderA");
+        if (entityType == EntityType.INVADERB)
+            return getGameWorld().spawn("InvaderB");
+        if (entityType == EntityType.INVADERC)
+            return getGameWorld().spawn("InvaderC");
+        return null;
+
+    }
+
+    @Override
+    public void initInput(){
+        Input input = getInput();
+
+        input.addAction(new UserAction("Move Left") {
+            @Override
+            protected void onAction() {
+                ship.getComponent(ShipControl.class).moveLeft();
+            }
+        }, KeyCode.A);
+        input.addAction(new UserAction("Move Right") {
+            @Override
+            protected void onAction() {
+                ship.getComponent(ShipControl.class).moveRight();
+            }
+        }, KeyCode.D);
+        input.addAction(new UserAction("Fire Bullet") {
+            @Override
+            protected void onActionBegin() {
+                //todo code => fire Bullet
+                Entity bullet = getGameWorld().spawn("Bullet");
+                bullet.setX(ship.getX() + 27);
+                bullet.setY(ship.getY());
+                System.out.println("Bullet fired");
+                bullet.getComponent(BulletControl.class).moveUp();
+            }
+        }, KeyCode.SPACE);
     }
 
     public static void main(String[] args) {
