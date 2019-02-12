@@ -1,7 +1,6 @@
 Todo
 - set Invaders Path
 - //set invader animation faster
-- set Invaders get faster when down
 - set invaders win when down
 - set detection of player bullet (with BBox)
 - let invaders fire bullet
