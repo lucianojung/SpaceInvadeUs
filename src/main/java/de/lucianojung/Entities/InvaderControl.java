@@ -36,10 +36,6 @@ public class InvaderControl extends Component {
     public void onUpdate(double tpf) {
         entity.translateX(speed);
 
-        if (speed != 0) {
-
-        }
-
         //Example:
         /*entity.translateX(speed * tpf);
 
@@ -66,5 +62,10 @@ public class InvaderControl extends Component {
     public void moveLeft() {
         this.speed = -1 * Math.abs(speed);
         getEntity().setScaleX(-1);
+    }
+
+    public void moveDown() {
+        this.speed = Math.abs(1.2 * speed);
+        entity.translateY(10);
     }
 }

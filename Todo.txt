@@ -1,0 +1,15 @@
+Todo
+- set Invaders Path
+-> ITERATOR
+- set invaders win when down
+- set Invaders get faster when down
+- set detection of player bullet (with BBox)
+- let invaders fire bullet
+- let them fire randomly
+- detection on ship
+- ship lives
+- ship lives show on Screen
+- ship Bases for protection
+- Base bullet detection
+- level end
+- levels

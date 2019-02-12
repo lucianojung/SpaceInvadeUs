@@ -10,8 +10,11 @@ import de.lucianojung.Entities.BulletControl;
 import de.lucianojung.Entities.InvaderControl;
 import de.lucianojung.Entities.EntityType;
 import de.lucianojung.Entities.ShipControl;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Dimension2D;
 import javafx.scene.input.KeyCode;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,8 +70,44 @@ public class SpaceInvadeUsApp extends GameApplication {
                 currentInvader.getComponent(InvaderControl.class).moveRight();
             }
         }
+        getMasterTimer().runAtInterval(() -> {
+            System.out.println("check");
+            checkInvaderDirection();
+        }, Duration.millis(50));
 
         ship = getGameWorld().spawn("Ship");
+    }
+
+    private void checkInvaderDirection() {
+        for (Entity invader : getAllInvaders()) {
+            int xValue = ((int) invader.getX());
+            if (xValue + 64 <= WINDOWSIZE.getWidth()) {
+                if (xValue > 0) continue;
+                System.out.println("Move Right because of newValue: " + xValue);
+                for (Entity innerInvader : getAllInvaders()) {
+                    innerInvader.getComponent(InvaderControl.class).moveDown();
+                    innerInvader.getComponent(InvaderControl.class).moveRight();
+                }
+                return;
+            }
+            System.out.println("Move Left because of newValue: " + xValue);
+            for (Entity innerInvader : getAllInvaders()) {
+                innerInvader.getComponent(InvaderControl.class).moveDown();
+                innerInvader.getComponent(InvaderControl.class).moveLeft();
+            }
+            return;
+        }
+    }
+
+    public List<Entity> getAllInvaders(){
+        List<Entity> entities = new ArrayList<>();
+        for (List<Entity> invaderRows : invaders) {
+            for (Entity invader : invaderRows) {
+                if (invader.isActive())//todo or is Living if this later doesnt work
+                    entities.add(invader);
+            }
+        }
+        return entities;
     }
 
     private Entity spawnInvader(EntityType entityType) {
