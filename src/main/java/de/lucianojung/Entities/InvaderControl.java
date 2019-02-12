@@ -1,6 +1,7 @@
 package de.lucianojung.Entities;
 
 import com.almasb.fxgl.app.FXGL;
+import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.AnimationChannel;
@@ -13,22 +14,24 @@ public class InvaderControl extends Component {
     private AnimationChannel animFly;
     private AnimatedTexture texture;
 
-    public InvaderControl(EntityType entityType) {
+    public InvaderControl() {
         this.speed = ((Config) FXGL.getGameConfig()).getInvaderSpeed();
 
-        if (EntityType.INVADERA.equals(entityType))
-            animFly = new AnimationChannel("InvaderA.png", 2, 64, 64, Duration.seconds(1), 0, 1);
-        if (EntityType.INVADERB.equals(entityType))
-            animFly = new AnimationChannel("InvaderB.png", 2, 64, 64, Duration.seconds(1), 0, 1);
-        if (EntityType.INVADERC.equals(entityType))
-            animFly = new AnimationChannel("InvaderC.png", 2, 64, 64, Duration.seconds(1), 0, 1);
 
-        texture = new AnimatedTexture(animFly);
     }
 
     @Override
     public void onAdded() {
-        entity.setView(texture);
+        if (EntityType.INVADERA.equals(entity.getType()))
+            animFly = new AnimationChannel("InvaderA.png", 2, 64, 64, Duration.seconds(1), 0, 1);
+        else if (EntityType.INVADERB.equals(entity.getType()))
+            animFly = new AnimationChannel("InvaderB.png", 2, 64, 64, Duration.seconds(1), 0, 1);
+        else if (EntityType.INVADERC.equals(entity.getType()))
+            animFly = new AnimationChannel("InvaderC.png", 2, 64, 64, Duration.seconds(1), 0, 1);
+
+        texture = new AnimatedTexture(animFly);
+
+        entity.setViewWithBBox(texture);
         texture.loopAnimationChannel(animFly);
     }
 
@@ -65,7 +68,14 @@ public class InvaderControl extends Component {
     }
 
     public void moveDown() {
-        this.speed = Math.abs(1.2 * speed);
+        this.speed = Math.abs(speed);
         entity.translateY(10);
+    }
+
+    public void fireBullet() {
+        Entity invaderBullet = FXGL.getGameWorld().spawn("InvaderBullet");
+        invaderBullet.setX(entity.getX() + 27);
+        invaderBullet.setY(entity.getY() - 15);
+        FXGL.getAudioPlayer().playSound("InvaderBullet.wav");
     }
 }

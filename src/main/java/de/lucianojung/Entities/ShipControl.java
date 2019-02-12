@@ -8,18 +8,15 @@ import javafx.scene.image.Image;
 
 public class ShipControl extends Component {
 
-    private Texture texture;
+    int lives;
 
-    public ShipControl(EntityType entityType) {
-        if (!EntityType.SHIP.equals(entityType)) return;
-
-        texture = FXGL.getAssetLoader().loadTexture("Ship.png");
-
+    public ShipControl() {
+        lives = ((Config) FXGL.getGameConfig()).getPlayerLives();
     }
 
     @Override
     public void onAdded(){
-        entity.setView(texture);
+
     }
 
     @Override
@@ -36,4 +33,12 @@ public class ShipControl extends Component {
             entity.translateX(-((Config) FXGL.getGameConfig()).getPlayerSpeed());
     }
 
+    public void loseLive(){
+        lives--;
+        FXGL.getAudioPlayer().playSound("ShipHit.wav");
+    }
+
+    public int getLives() {
+        return lives;
+    }
 }

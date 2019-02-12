@@ -9,6 +9,7 @@ public class Config {
 
     private int invadersAmount;
     private double invaderSpeed;
+    private int invaderBulletAmount;
 
     private double bulletSpeed;
 
@@ -38,6 +39,10 @@ public class Config {
 
     public double getInvaderSpeed() {
         return invaderSpeed;
+    }
+
+    public int getInvaderBulletAmount() {
+        return 60000 / invaderBulletAmount;
     }
 
     public double getBulletSpeed() {

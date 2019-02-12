@@ -2,31 +2,31 @@ package de.lucianojung.Entities;
 
 import com.almasb.fxgl.app.FXGL;
 import com.almasb.fxgl.entity.component.Component;
-import com.almasb.fxgl.texture.Texture;
 import de.lucianojung.spaceInvadeUs.Config;
-import javafx.scene.image.Image;
 
 public class BulletControl extends Component {
-    private Texture texture;
     private double speed;
 
-    public BulletControl(EntityType entityType) {
-        if (!EntityType.BULLET.equals(entityType)) return;
+    public BulletControl() {
 
         this.speed = ((Config) FXGL.getGameConfig()).getBulletSpeed();
-
-        texture = FXGL.getAssetLoader().loadTexture("Bullet.png");
 
     }
 
     @Override
     public void onAdded(){
-        entity.setView(texture);
+        if (entity.getType() == EntityType.SHIPBULLET)
+            moveUp();
+        else if (entity.getType() == EntityType.INVADERBULLET)
+            moveDown();
+
     }
 
     @Override
     public void onUpdate(double tpf) {
         entity.translateY(speed);
+        if (entity.getY() < 0)
+            entity.removeFromWorld();
     }
 
     public void moveDown(){

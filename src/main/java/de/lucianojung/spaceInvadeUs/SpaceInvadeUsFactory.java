@@ -1,6 +1,7 @@
 package de.lucianojung.spaceInvadeUs;
 
 import com.almasb.fxgl.entity.*;
+import com.almasb.fxgl.entity.components.CollidableComponent;
 import de.lucianojung.Entities.BulletControl;
 import de.lucianojung.Entities.InvaderControl;
 import de.lucianojung.Entities.EntityType;
@@ -11,21 +12,27 @@ public class SpaceInvadeUsFactory implements EntityFactory {
     @Spawns("InvaderA")
     public Entity newInvaderA(SpawnData data){
         return Entities.builder()
-                .with(new InvaderControl(EntityType.INVADERA))
+                .type(EntityType.INVADERA)
+                .with(new InvaderControl())
+                .with(new CollidableComponent(true))
                 .build();
     }
 
     @Spawns("InvaderB")
     public Entity newInvaderB(SpawnData data){
         return Entities.builder()
-                .with(new InvaderControl(EntityType.INVADERB))
+                .type(EntityType.INVADERB)
+                .with(new InvaderControl())
+                .with(new CollidableComponent(true))
                 .build();
     }
 
     @Spawns("InvaderC")
     public Entity newInvaderC(SpawnData data){
         return Entities.builder()
-                .with(new InvaderControl(EntityType.INVADERC))
+                .type(EntityType.INVADERC)
+                .with(new InvaderControl())
+                .with(new CollidableComponent(true))
                 .build();
     }
 
@@ -33,7 +40,10 @@ public class SpaceInvadeUsFactory implements EntityFactory {
     public Entity newShip(SpawnData data){
         return Entities.builder()
                 .at(480, 860)
-                .with(new ShipControl(EntityType.SHIP))
+                .type(EntityType.SHIP)
+                .viewFromTextureWithBBox("Ship.png")
+                .with(new ShipControl())
+                .with(new CollidableComponent(true))
                 .build();
     }
 
@@ -42,10 +52,23 @@ public class SpaceInvadeUsFactory implements EntityFactory {
         return newShip(data);
     }
 
-    @Spawns("Bullet")
-    public Entity newBullet(SpawnData data){
+    @Spawns("ShipBullet")
+    public Entity newShipBullet(SpawnData data){
         return Entities.builder()
-                .with(new BulletControl(EntityType.BULLET))
+                .type(EntityType.SHIPBULLET)
+                .viewFromTextureWithBBox("Bullet.png")
+                .with(new BulletControl())
+                .with(new CollidableComponent(true))
+                .build();
+    }
+
+    @Spawns("InvaderBullet")
+    public Entity newInvaderBullet(SpawnData data){
+        return Entities.builder()
+                .type(EntityType.INVADERBULLET)
+                .viewFromTextureWithBBox("Bullet.png")
+                .with(new BulletControl())
+                .with(new CollidableComponent(true))
                 .build();
     }
 }
