@@ -9,14 +9,31 @@ import de.lucianojung.spaceInvadeUs.Config;
 import javafx.util.Duration;
 
 public class InvaderControl extends Component {
+    /*
+    * Controller Class for Invaders
+    * Differentiate between InvaderTypes (A, B, C)
+    * got a Direction to Move (enum)
+    *   -> can Move Left, Right and Down
+    *   -> can check Direction
+    *   -> can change Direction
+    * got a texture (animated) and an animation
+    *   -> textures in resources/assets/textures -> InvaderA, -B, -C
+    * can fire Bullet
+    * speed up if loose Invader()
+    */
+
     private double speed;
 
     private AnimationChannel animFly;
     private AnimatedTexture texture;
+    private Direction direction;
+
+    enum Direction {
+        LEFT, RIGHT
+    }
 
     public InvaderControl() {
         this.speed = ((Config) FXGL.getGameConfig()).getInvaderSpeed();
-
 
     }
 
@@ -33,36 +50,23 @@ public class InvaderControl extends Component {
 
         entity.setViewWithBBox(texture);
         texture.loopAnimationChannel(animFly);
+
+        moveRight();
     }
 
     @Override
     public void onUpdate(double tpf) {
         entity.translateX(speed);
-
-        //Example:
-        /*entity.translateX(speed * tpf);
-
-        if (speed != 0) {
-
-            if (texture.getAnimationChannel() == animIdle) {
-                texture.loopAnimationChannel(animWalk);
-            }
-
-            speed = (int) (speed * 0.9);
-
-            if (FXGLMath.abs(speed) < 1) {
-                speed = 0;
-                texture.loopAnimationChannel(animIdle);
-            }
-        }*/
     }
 
     public void moveRight() {
+        direction = Direction.RIGHT;
         this.speed = Math.abs(speed);
         getEntity().setScaleX(1);
     }
 
     public void moveLeft() {
+        direction = Direction.LEFT;
         this.speed = -1 * Math.abs(speed);
         getEntity().setScaleX(-1);
     }
@@ -77,5 +81,24 @@ public class InvaderControl extends Component {
         invaderBullet.setX(entity.getX() + 27);
         invaderBullet.setY(entity.getY() - 15);
         FXGL.getAudioPlayer().playSound("InvaderBullet.wav");
+    }
+
+    public void looseInvader(){
+        speed = speed * ((Config) FXGL.getGameConfig()).getInvaderSpeedUp();
+    }
+
+    public boolean checkDirection(){
+        if (direction == Direction.RIGHT)
+            return entity.getX() + 64 >= ((Config) FXGL.getGameConfig()).getGameWidth();
+        if (direction == Direction.LEFT)
+            return entity.getX() <= 0;
+        return false;
+    }
+
+    public void changeDirection(){
+        if (direction == Direction.RIGHT)
+            moveLeft();
+        else
+            moveRight();
     }
 }

@@ -5,12 +5,16 @@ import com.almasb.fxgl.entity.component.Component;
 import de.lucianojung.spaceInvadeUs.Config;
 
 public class BulletControl extends Component {
+    /*
+    * Controller Class for Bullets
+    * Differentiate between Ship and Invader Bullet
+    * has an int speed (got from config.kv)
+    * can Move Up (ShipBullet) or Down (InvaderBullet)
+    */
     private double speed;
 
     public BulletControl() {
-
         this.speed = ((Config) FXGL.getGameConfig()).getBulletSpeed();
-
     }
 
     @Override
@@ -19,7 +23,6 @@ public class BulletControl extends Component {
             moveUp();
         else if (entity.getType() == EntityType.INVADERBULLET)
             moveDown();
-
     }
 
     @Override

@@ -7,12 +7,16 @@ Todo
 - let them fire randomly
 - detection on ship
 - ship lives
--> ITERATOR
 - speed up invaders if someone died
 - end Level shown
 - ship lives show on Screen
-- ship Bases for protection
+- level end -> restart (if won -> more bullets)
+-> ITERATOR
 - standardise code (sounds, textures, actions)
+
+optimization for better Gameplay:
+- better balancing
+- show Points
+- ship Bases for protection
 - Base bullet detection
-- level end
 - levels

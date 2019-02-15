@@ -9,6 +9,15 @@ import de.lucianojung.Entities.ShipControl;
 
 public class SpaceInvadeUsFactory implements EntityFactory {
 
+    /*
+    * Subclass of EntityFactory used in FXGL to spawn Entities
+    * spawns:
+    *   - InvaderA, -B and -C
+    *   - Invader Bullet
+    *   - Ship
+    *   - Ship Bullet
+    */
+
     @Spawns("InvaderA")
     public Entity newInvaderA(SpawnData data){
         return Entities.builder()
@@ -36,6 +45,16 @@ public class SpaceInvadeUsFactory implements EntityFactory {
                 .build();
     }
 
+    @Spawns("InvaderBullet")
+    public Entity newInvaderBullet(SpawnData data){
+        return Entities.builder()
+                .type(EntityType.INVADERBULLET)
+                .viewFromTextureWithBBox("Bullet.png")
+                .with(new BulletControl())
+                .with(new CollidableComponent(true))
+                .build();
+    }
+
     @Spawns("Ship")
     public Entity newShip(SpawnData data){
         return Entities.builder()
@@ -47,25 +66,10 @@ public class SpaceInvadeUsFactory implements EntityFactory {
                 .build();
     }
 
-    @Spawns("Player")
-    public Entity newPlayer(SpawnData data){
-        return newShip(data);
-    }
-
     @Spawns("ShipBullet")
     public Entity newShipBullet(SpawnData data){
         return Entities.builder()
                 .type(EntityType.SHIPBULLET)
-                .viewFromTextureWithBBox("Bullet.png")
-                .with(new BulletControl())
-                .with(new CollidableComponent(true))
-                .build();
-    }
-
-    @Spawns("InvaderBullet")
-    public Entity newInvaderBullet(SpawnData data){
-        return Entities.builder()
-                .type(EntityType.INVADERBULLET)
                 .viewFromTextureWithBBox("Bullet.png")
                 .with(new BulletControl())
                 .with(new CollidableComponent(true))

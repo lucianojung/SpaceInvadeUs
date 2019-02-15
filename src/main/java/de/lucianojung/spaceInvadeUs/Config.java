@@ -1,6 +1,8 @@
 package de.lucianojung.spaceInvadeUs;
 
 public class Config {
+    //config Class for Game uses the config.kv from resources/assets/kv
+
     private int gameWidth;
     private int gameHeight;
 
@@ -9,6 +11,7 @@ public class Config {
 
     private int invadersAmount;
     private double invaderSpeed;
+    private double invaderSpeedUp;
     private int invaderBulletAmount;
 
     private double bulletSpeed;
@@ -39,6 +42,10 @@ public class Config {
 
     public double getInvaderSpeed() {
         return invaderSpeed;
+    }
+
+    public double getInvaderSpeedUp() {
+        return 1 + invaderSpeedUp;
     }
 
     public int getInvaderBulletAmount() {
