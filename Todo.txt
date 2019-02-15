@@ -11,9 +11,10 @@ Todo
 - end Level shown
 - ship lives show on Screen
 - level end -> restart (if won -> more bullets)
--> ITERATOR
 - standardise code (sounds, textures, actions)
+- add comments / documentation
 
+-> ITERATOR
 optimization for better Gameplay:
 - better balancing
 - show Points
