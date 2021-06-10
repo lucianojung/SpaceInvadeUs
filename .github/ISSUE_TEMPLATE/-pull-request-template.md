@@ -8,7 +8,7 @@ assignees: lucianojung
 ---
 
 Is your pull request related to a problem? Please describe.
-A clear and concise description of what the solution for the problem is. Ex. This Pull Request will fix the followwing issue [...]
+A clear and concise description of what the solution for the problem is. Ex. This Pull Request will fix the following issue [...]
 
 Describe what you coded to solve the problem
 A clear and concise description of what you did to solve it.
