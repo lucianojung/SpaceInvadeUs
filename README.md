@@ -1,6 +1,9 @@
 # SpaceInvadeUs
 A simple **Space Invader Game** to start Game Development using [FXGL](https://github.com/AlmasB/FXGL)
 > documented Code for better Understanding
+> 
+![SpaceInvadeUs](https://user-images.githubusercontent.com/33691403/135430222-db18e880-f46a-4862-8865-10995a2403d7.png)
+
 
 Getting Started
 -
